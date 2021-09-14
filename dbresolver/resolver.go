@@ -1,6 +1,6 @@
 package dbresolver
 
-import "gorm.io/gorm"
+import "github.com/Hive-Intelligence/gorm"
 
 type resolver struct {
 	sources    []gorm.ConnPool

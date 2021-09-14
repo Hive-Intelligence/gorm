@@ -1,6 +1,6 @@
 package dbresolver
 
-import "gorm.io/gorm/clause"
+import "github.com/Hive-Intelligence/gorm/clause"
 
 type Operation string
 
