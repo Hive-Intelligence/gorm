@@ -21,16 +21,16 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/casbin/casbin/v2/model"
-	"github.com/casbin/casbin/v2/persist"
 	"github.com/Hive-Intelligence/gorm/driver/mysql"
 	"github.com/Hive-Intelligence/gorm/driver/postgres"
+	"github.com/casbin/casbin/v2/model"
+	"github.com/casbin/casbin/v2/persist"
 
 	//"gorm.io/driver/sqlite"
-	"github.com/Hive-Intelligence/gorm/driver/sqlserver"
 	"github.com/Hive-Intelligence/gorm"
-	"github.com/Hive-Intelligence/gorm/logger"
 	"github.com/Hive-Intelligence/gorm/dbresolver"
+	"github.com/Hive-Intelligence/gorm/driver/sqlserver"
+	"github.com/Hive-Intelligence/gorm/logger"
 )
 
 const (

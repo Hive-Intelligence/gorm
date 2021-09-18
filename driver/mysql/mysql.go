@@ -8,13 +8,13 @@ import (
 	"strings"
 	"time"
 
-	_ "github.com/go-sql-driver/mysql"
 	"github.com/Hive-Intelligence/gorm"
 	"github.com/Hive-Intelligence/gorm/callbacks"
 	"github.com/Hive-Intelligence/gorm/clause"
 	"github.com/Hive-Intelligence/gorm/logger"
 	"github.com/Hive-Intelligence/gorm/migrator"
 	"github.com/Hive-Intelligence/gorm/schema"
+	_ "github.com/go-sql-driver/mysql"
 )
 
 type Config struct {

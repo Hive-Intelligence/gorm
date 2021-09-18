@@ -6,14 +6,14 @@ import (
 	"regexp"
 	"strconv"
 
-	"github.com/jackc/pgx/v4"
-	"github.com/jackc/pgx/v4/stdlib"
 	"github.com/Hive-Intelligence/gorm"
 	"github.com/Hive-Intelligence/gorm/callbacks"
 	"github.com/Hive-Intelligence/gorm/clause"
 	"github.com/Hive-Intelligence/gorm/logger"
 	"github.com/Hive-Intelligence/gorm/migrator"
 	"github.com/Hive-Intelligence/gorm/schema"
+	"github.com/jackc/pgx/v4"
+	"github.com/jackc/pgx/v4/stdlib"
 )
 
 type Dialector struct {

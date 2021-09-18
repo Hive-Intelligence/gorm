@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/Hive-Intelligence/gorm/driver/mysql"
 	"github.com/Hive-Intelligence/gorm"
 	"github.com/Hive-Intelligence/gorm/dbresolver"
+	"github.com/Hive-Intelligence/gorm/driver/mysql"
 )
 
 type User struct {
