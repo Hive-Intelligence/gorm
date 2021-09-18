@@ -7,7 +7,6 @@ import (
 	"strconv"
 	"strings"
 
-	_ "github.com/denisenkom/go-mssqldb"
 	"github.com/Hive-Intelligence/gorm"
 	"github.com/Hive-Intelligence/gorm/callbacks"
 	"github.com/Hive-Intelligence/gorm/clause"

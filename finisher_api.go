@@ -399,7 +399,7 @@ func (db *DB) Count(count *int64) (tx *DB) {
 
 				if tx.Statement.Distinct {
 					expr = clause.Expr{SQL: "COUNT(DISTINCT(?))", Vars: []interface{}{clause.Column{Name: dbName}}}
-				} else {
+				} else if dbName != "*" {
 					expr = clause.Expr{SQL: "COUNT(?)", Vars: []interface{}{clause.Column{Name: dbName}}}
 				}
 			}
@@ -506,7 +506,12 @@ func (db *DB) ScanRows(rows *sql.Rows, dest interface{}) error {
 	tx.Statement.Dest = dest
 	tx.Statement.ReflectValue = reflect.ValueOf(dest)
 	for tx.Statement.ReflectValue.Kind() == reflect.Ptr {
-		tx.Statement.ReflectValue = tx.Statement.ReflectValue.Elem()
+		elem := tx.Statement.ReflectValue.Elem()
+		if !elem.IsValid() {
+			elem = reflect.New(tx.Statement.ReflectValue.Type().Elem())
+			tx.Statement.ReflectValue.Set(elem)
+		}
+		tx.Statement.ReflectValue = elem
 	}
 	Scan(rows, tx, true)
 	return tx.Error

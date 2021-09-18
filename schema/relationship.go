@@ -5,9 +5,9 @@ import (
 	"reflect"
 	"strings"
 
-	"github.com/jinzhu/inflection"
 	"github.com/Hive-Intelligence/gorm/clause"
 	"github.com/Hive-Intelligence/gorm/utils"
+	"github.com/jinzhu/inflection"
 )
 
 // RelationshipType relationship type
