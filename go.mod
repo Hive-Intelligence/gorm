@@ -1,10 +1,9 @@
 module github.com/Hive-Intelligence/gorm
 
-go 1.15
+go 1.14
 
 require (
-	github.com/casbin/casbin/v2 v2.37.0
-	github.com/denisenkom/go-mssqldb v0.10.0
+	github.com/casbin/casbin/v2 v2.37.1
 	github.com/go-sql-driver/mysql v1.6.0
 	github.com/jackc/pgx/v4 v4.13.0
 	github.com/jinzhu/inflection v1.0.0

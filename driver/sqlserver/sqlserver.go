@@ -7,13 +7,12 @@ import (
 	"strconv"
 	"strings"
 
-	_ "github.com/denisenkom/go-mssqldb"
-	"gorm.io/gorm"
-	"gorm.io/gorm/callbacks"
-	"gorm.io/gorm/clause"
-	"gorm.io/gorm/logger"
-	"gorm.io/gorm/migrator"
-	"gorm.io/gorm/schema"
+	"github.com/Hive-Intelligence/gorm"
+	"github.com/Hive-Intelligence/gorm/callbacks"
+	"github.com/Hive-Intelligence/gorm/clause"
+	"github.com/Hive-Intelligence/gorm/logger"
+	"github.com/Hive-Intelligence/gorm/migrator"
+	"github.com/Hive-Intelligence/gorm/schema"
 )
 
 type Config struct {

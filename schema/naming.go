@@ -38,11 +38,10 @@ type NamingStrategy struct {
 
 // TableName convert string to table name
 func (ns NamingStrategy) TableName(model reflect.Type) string {
-	str := model.Name()
 	if ns.SingularTable {
-		return ns.TablePrefix + ns.toDBName(str)
+		return ns.TablePrefix + ns.toDBName(model.Name())
 	}
-	return ns.TablePrefix + inflection.Plural(ns.toDBName(str))
+	return ns.TablePrefix + inflection.Plural(ns.toDBName(model.Name()))
 }
 
 // SchemaName generate schema name from table name, don't guarantee it is the reverse value of TableName

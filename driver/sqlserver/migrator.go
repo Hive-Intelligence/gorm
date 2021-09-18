@@ -3,9 +3,9 @@ package sqlserver
 import (
 	"fmt"
 
-	"gorm.io/gorm"
-	"gorm.io/gorm/clause"
-	"gorm.io/gorm/migrator"
+	"github.com/Hive-Intelligence/gorm"
+	"github.com/Hive-Intelligence/gorm/clause"
+	"github.com/Hive-Intelligence/gorm/migrator"
 )
 
 type Migrator struct {

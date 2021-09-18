@@ -4,7 +4,7 @@ import (
 	"errors"
 	"sync"
 
-	"gorm.io/gorm"
+	"github.com/Hive-Intelligence/gorm"
 )
 
 const (
