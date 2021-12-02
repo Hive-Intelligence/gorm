@@ -43,6 +43,13 @@ func (db *DB) Clauses(conds ...clause.Expression) (tx *DB) {
 
 var tableRegexp = regexp.MustCompile(`(?i).+? AS (\w+)\s*(?:$|,)`)
 
+// TableFrom specify the table you would like to run db operations
+func (db *DB) TableFrom(model interface{}, args ...interface{}) (tx *DB) {
+	name := db.TableName(model)
+	tx = db.Table(name,args...)
+	return
+}
+
 // Table specify the table you would like to run db operations
 func (db *DB) Table(name string, args ...interface{}) (tx *DB) {
 	tx = db.getInstance()

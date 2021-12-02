@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
+	"reflect"
 	"sync"
 	"time"
 
@@ -154,6 +155,14 @@ func Open(dialector Dialector, config *Config) (db *DB, err error) {
 	}
 
 	return
+}
+
+func (db *DB) TableName(model interface{}) string {
+	mt := reflect.TypeOf(model)
+	for mt.Kind() == reflect.Ptr {
+		mt = mt.Elem()
+	}
+	return db.NamingStrategy.TableName(mt)
 }
 
 // Session create new db session
