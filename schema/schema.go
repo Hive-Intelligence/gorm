@@ -100,7 +100,7 @@ func Parse(dest interface{}, cacheStore *sync.Map, namer Namer) (*Schema, error)
 	if tabler, ok := modelValue.Interface().(Tabler); ok {
 		tableName = tabler.TableName()
 	}
-	if en, ok := namer.(embeddedNamer); ok {
+	if en, ok := namer.(EmbeddedNamer); ok {
 		tableName = en.Table
 	}
 

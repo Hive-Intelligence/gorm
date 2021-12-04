@@ -162,7 +162,14 @@ func (db *DB) TableName(model interface{}) string {
 	for mt.Kind() == reflect.Ptr {
 		mt = mt.Elem()
 	}
-	return db.NamingStrategy.TableName(mt)
+	tn := db.NamingStrategy.TableName(mt)
+	if tabler, ok := model.(schema.Tabler); ok {
+		tn = tabler.TableName()
+	}
+	if en, ok := model.(*schema.EmbeddedNamer); ok {
+		tn = en.Table
+	}
+	return tn
 }
 
 // Session create new db session
