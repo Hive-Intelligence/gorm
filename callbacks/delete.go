@@ -60,7 +60,7 @@ func DeleteBeforeAssociations(db *gorm.DB) {
 							}
 
 							if !withoutConditions {
-								if tx.Statement.AllUnscoped {
+								if db.Statement.AllUnscoped {
 									if db.AddError(tx.Clauses(clause.Where{Exprs: queryConds}).Unscoped().Delete(modelValue).Error) != nil {
 										return
 									}
@@ -95,7 +95,7 @@ func DeleteBeforeAssociations(db *gorm.DB) {
 							_, foreignValues := schema.GetIdentityFieldValuesMap(db.Statement.ReflectValue, foreignFields)
 							column, values := schema.ToQueryValues(table, relForeignKeys, foreignValues)
 							queryConds = append(queryConds, clause.IN{Column: column, Values: values})
-							if tx.Statement.AllUnscoped {
+							if db.Statement.AllUnscoped {
 								if db.AddError(tx.Clauses(clause.Where{Exprs: queryConds}).Unscoped().Delete(modelValue).Error) != nil {
 									return
 								}
