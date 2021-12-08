@@ -46,7 +46,7 @@ var tableRegexp = regexp.MustCompile(`(?i).+? AS (\w+)\s*(?:$|,)`)
 // TableFrom specify the table you would like to run db operations
 func (db *DB) TableFrom(model interface{}, args ...interface{}) (tx *DB) {
 	name := db.TableName(model)
-	tx = db.Table(name,args...)
+	tx = db.Table(name, args...)
 	return
 }
 
@@ -280,6 +280,13 @@ func (db *DB) Assign(attrs ...interface{}) (tx *DB) {
 func (db *DB) Unscoped() (tx *DB) {
 	tx = db.getInstance()
 	tx.Statement.Unscoped = true
+	return
+}
+
+func (db *DB) AllUnscoped() (tx *DB) {
+	tx = db.getInstance()
+	tx.Statement.Unscoped = true
+	tx.Statement.AllUnscoped = true
 	return
 }
 
