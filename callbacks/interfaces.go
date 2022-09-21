@@ -14,6 +14,10 @@ type BeforeUpdateInterface interface {
 	BeforeUpdate(*gorm.DB) error
 }
 
+type GormUpdatingInterface interface {
+	GormUpdating(*gorm.DB) error
+}
+
 type AfterUpdateInterface interface {
 	AfterUpdate(*gorm.DB) error
 }
