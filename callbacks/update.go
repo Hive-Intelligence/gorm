@@ -51,13 +51,11 @@ func BeforeUpdate(db *gorm.DB) {
 }
 
 func Updating(db *gorm.DB) {
-	if db.Error == nil && db.Statement.Schema != nil && !db.Statement.SkipHooks && (db.Statement.Schema.BeforeSave || db.Statement.Schema.BeforeUpdate) {
+	if db.Error == nil && db.Statement.Schema != nil && !db.Statement.SkipHooks {
 		callMethod(db, func(value interface{}, tx *gorm.DB) (called bool) {
-			if db.Statement.Schema.BeforeUpdate {
-				if i, ok := value.(GormUpdatingInterface); ok {
-					called = true
-					db.AddError(i.GormUpdating(tx))
-				}
+			if i, ok := value.(GormUpdatingInterface); ok {
+				called = true
+				db.AddError(i.GormUpdating(tx))
 			}
 			return called
 		})
@@ -80,14 +78,13 @@ func Update(db *gorm.DB) {
 			} else {
 				return
 			}
+			Updating(db)
 			db.Statement.Build("UPDATE", "SET", "WHERE")
 		}
-
 		if _, ok := db.Statement.Clauses["WHERE"]; !db.AllowGlobalUpdate && !ok {
 			db.AddError(gorm.ErrMissingWhereClause)
 			return
 		}
-		Updating(db)
 		if !db.DryRun && db.Error == nil {
 			result, err := db.Statement.ConnPool.ExecContext(db.Statement.Context, db.Statement.SQL.String(), db.Statement.Vars...)
 

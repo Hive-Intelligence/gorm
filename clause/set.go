@@ -34,6 +34,12 @@ func (set Set) Build(builder Builder) {
 func (set Set) MergeClause(clause *Clause) {
 	copiedAssignments := make([]Assignment, len(set))
 	copy(copiedAssignments, set)
+	if clause.Expression != nil {
+		ass, ok := clause.Expression.(Set)
+		if ok {
+			copiedAssignments = append(ass, copiedAssignments...)
+		}
+	}
 	clause.Expression = Set(copiedAssignments)
 }
 
