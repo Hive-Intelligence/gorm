@@ -37,7 +37,21 @@ func (set Set) MergeClause(clause *Clause) {
 	if clause.Expression != nil {
 		ass, ok := clause.Expression.(Set)
 		if ok {
-			copiedAssignments = append(ass, copiedAssignments...)
+			var cs *Assignment
+			for _, a := range ass {
+				cs = nil
+				for _, c := range copiedAssignments {
+					if c.Column.Name == a.Column.Name {
+						cs = &c
+						break
+					}
+				}
+				if cs != nil {
+					cs.Value = a.Value
+				} else {
+					copiedAssignments = append(copiedAssignments, a)
+				}
+			}
 		}
 	}
 	clause.Expression = Set(copiedAssignments)
