@@ -51,7 +51,7 @@ func BeforeUpdate(db *gorm.DB) {
 }
 
 func Updating(db *gorm.DB) {
-	if db.Error == nil && db.Statement.Schema != nil && !db.Statement.SkipHooks && db.Statement.Schema.Updating {
+	if db.Error == nil && db.Statement.Schema != nil && !db.Statement.SkipHooks && db.Statement.Schema.GormUpdating {
 		callMethod(db, func(value interface{}, tx *gorm.DB) (called bool) {
 			if i, ok := value.(GormUpdatingInterface); ok {
 				called = true
