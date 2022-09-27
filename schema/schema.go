@@ -16,31 +16,31 @@ import (
 var ErrUnsupportedDataType = errors.New("unsupported data type")
 
 type Schema struct {
-	Name                      string
-	ModelType                 reflect.Type
-	Table                     string
-	PrioritizedPrimaryField   *Field
-	DBNames                   []string
-	PrimaryFields             []*Field
-	PrimaryFieldDBNames       []string
-	Fields                    []*Field
-	FieldsByName              map[string]*Field
-	FieldsByDBName            map[string]*Field
-	FieldsWithDefaultDBValue  []*Field // fields with default value assigned by database
-	Relationships             Relationships
-	CreateClauses             []clause.Interface
-	QueryClauses              []clause.Interface
-	UpdateClauses             []clause.Interface
-	DeleteClauses             []clause.Interface
-	BeforeCreate, AfterCreate bool
-	BeforeUpdate, AfterUpdate bool
-	BeforeDelete, AfterDelete bool
-	BeforeSave, AfterSave     bool
-	AfterFind                 bool
-	err                       error
-	initialized               chan struct{}
-	namer                     Namer
-	cacheStore                *sync.Map
+	Name                                string
+	ModelType                           reflect.Type
+	Table                               string
+	PrioritizedPrimaryField             *Field
+	DBNames                             []string
+	PrimaryFields                       []*Field
+	PrimaryFieldDBNames                 []string
+	Fields                              []*Field
+	FieldsByName                        map[string]*Field
+	FieldsByDBName                      map[string]*Field
+	FieldsWithDefaultDBValue            []*Field // fields with default value assigned by database
+	Relationships                       Relationships
+	CreateClauses                       []clause.Interface
+	QueryClauses                        []clause.Interface
+	UpdateClauses                       []clause.Interface
+	DeleteClauses                       []clause.Interface
+	BeforeCreate, AfterCreate           bool
+	BeforeUpdate, Updating, AfterUpdate bool
+	BeforeDelete, AfterDelete           bool
+	BeforeSave, AfterSave               bool
+	AfterFind                           bool
+	err                                 error
+	initialized                         chan struct{}
+	namer                               Namer
+	cacheStore                          *sync.Map
 }
 
 func (schema Schema) String() string {
@@ -211,7 +211,7 @@ func Parse(dest interface{}, cacheStore *sync.Map, namer Namer) (*Schema, error)
 		}
 	}
 
-	callbacks := []string{"BeforeCreate", "AfterCreate", "BeforeUpdate", "AfterUpdate", "BeforeSave", "AfterSave", "BeforeDelete", "AfterDelete", "AfterFind"}
+	callbacks := []string{"BeforeCreate", "AfterCreate", "BeforeUpdate", "Updating", "AfterUpdate", "BeforeSave", "AfterSave", "BeforeDelete", "AfterDelete", "AfterFind"}
 	for _, name := range callbacks {
 		if methodValue := modelValue.MethodByName(name); methodValue.IsValid() {
 			switch methodValue.Type().String() {
