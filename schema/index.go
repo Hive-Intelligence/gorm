@@ -106,6 +106,8 @@ func parseFieldIndexes(field *Field) (indexes []Index) {
 
 				if name == "" {
 					name = field.Schema.namer.IndexName(field.Schema.Table, field.Name)
+				} else if name == "%" {
+					name = field.Schema.namer.IndexTableName(field.Schema.Table)
 				}
 
 				if (k == "UNIQUEINDEX") || settings["UNIQUE"] != "" {

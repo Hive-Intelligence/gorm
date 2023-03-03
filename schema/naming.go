@@ -19,6 +19,7 @@ type Namer interface {
 	RelationshipFKName(Relationship) string
 	CheckerName(table, column string) string
 	IndexName(table, column string) string
+	IndexTableName(table string) string
 }
 
 // NamingStrategy tables, columns naming strategy
@@ -74,6 +75,21 @@ func (ns NamingStrategy) IndexName(table, column string) string {
 		bs := h.Sum(nil)
 
 		idxName = fmt.Sprintf("idx%v%v", table, column)[0:56] + string(bs)[:8]
+	}
+	return idxName
+}
+
+// IndexName generate index name
+func (ns NamingStrategy) IndexTableName(table string) string {
+	idxName := fmt.Sprintf("idx_sys_%v", table)
+	idxName = strings.Replace(idxName, ".", "_", -1)
+
+	if utf8.RuneCountInString(idxName) > 64 {
+		h := sha1.New()
+		h.Write([]byte(idxName))
+		bs := h.Sum(nil)
+
+		idxName = fmt.Sprintf("idxsys%v", table)[0:56] + string(bs)[:8]
 	}
 	return idxName
 }
