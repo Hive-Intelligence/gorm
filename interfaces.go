@@ -3,13 +3,17 @@ package gorm
 import (
 	"context"
 	"database/sql"
-
 	"github.com/Hive-Intelligence/gorm/clause"
 	"github.com/Hive-Intelligence/gorm/schema"
 )
 
+type ICompatible interface {
+	CompatibleType(dataType string) string
+}
+
 // Dialector GORM database dialector
 type Dialector interface {
+	ICompatible
 	Name() string
 	Initialize(*DB) error
 	Migrator(db *DB) Migrator

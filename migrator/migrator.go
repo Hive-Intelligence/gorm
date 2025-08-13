@@ -48,7 +48,7 @@ func (m Migrator) DataTypeOf(field *schema.Field) string {
 	fieldValue := reflect.New(field.IndirectFieldType)
 	if dataTyper, ok := fieldValue.Interface().(GormDataTypeInterface); ok {
 		if dataType := dataTyper.GormDBDataType(m.DB, field); dataType != "" {
-			return dataType
+			return m.Dialector.CompatibleType(dataType)
 		}
 	}
 

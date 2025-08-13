@@ -3,6 +3,7 @@ package postgres
 import (
 	"database/sql"
 	"fmt"
+	"github.com/Hive-Intelligence/gorm/driver"
 	"regexp"
 	"strconv"
 
@@ -26,6 +27,7 @@ type Config struct {
 	PreferSimpleProtocol bool
 	WithoutReturning     bool
 	Conn                 *sql.DB
+	driver.DefaultCompatibleType
 }
 
 func Open(dsn string) gorm.Dialector {
