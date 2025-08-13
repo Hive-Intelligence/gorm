@@ -3,6 +3,7 @@ package sqlserver
 import (
 	"database/sql"
 	"fmt"
+	"github.com/Hive-Intelligence/gorm/driver"
 	"regexp"
 	"strconv"
 	"strings"
@@ -23,6 +24,7 @@ type Config struct {
 
 type Dialector struct {
 	*Config
+	driver.DefaultCompatibleType
 }
 
 func (dialector Dialector) Name() string {

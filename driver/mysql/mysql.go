@@ -212,15 +212,16 @@ func (dialector Dialector) DataTypeOf(field *schema.Field) string {
 	case schema.Bool:
 		return "boolean"
 	case schema.Int, schema.Uint:
+		fType := field.TagSettings["TYPE"]
 		sqlType := "bigint"
 		switch {
 		case field.Size <= 8:
 			sqlType = "tinyint"
-		case field.Size <= 16:
+		case field.Size <= 16, fType == "int2":
 			sqlType = "smallint"
 		case field.Size <= 24:
 			sqlType = "mediumint"
-		case field.Size <= 32:
+		case field.Size <= 32, fType == "int4":
 			sqlType = "int"
 		}
 
@@ -278,27 +279,30 @@ func (dialector Dialector) DataTypeOf(field *schema.Field) string {
 			return "datetime" + precision
 		}
 		return "datetime" + precision + " NULL"
-	case schema.Bytes:
-		if field.Size > 0 && field.Size < 65536 {
-			return fmt.Sprintf("varbinary(%d)", field.Size)
-		}
 
-		if field.Size >= 65536 && field.Size <= int(math.Pow(2, 24)) {
-			return "mediumblob"
-		}
-
-		return "longblob"
 	}
-
-	return string(field.DataType)
+	return dialector.CompatibleType(string(field.DataType))
 }
 
-func (dialectopr Dialector) SavePoint(tx *gorm.DB, name string) error {
+func (dialector Dialector) SavePoint(tx *gorm.DB, name string) error {
 	tx.Exec("SAVEPOINT " + name)
 	return nil
 }
 
-func (dialectopr Dialector) RollbackTo(tx *gorm.DB, name string) error {
+func (dialector Dialector) RollbackTo(tx *gorm.DB, name string) error {
 	tx.Exec("ROLLBACK TO SAVEPOINT " + name)
 	return nil
+}
+
+// CompatibleType 兼容 pgsql 类型
+func (dialector Dialector) CompatibleType(dataType string) string {
+	//	Jsonb      DataType = "jsonb" = "json"
+	//	Timestampz DataType = "timestamptz" = "timestamp"
+	switch dataType {
+	case "jsonb":
+		return "json"
+	case "timestamptz":
+		return "datetime"
+	}
+	return dataType
 }
