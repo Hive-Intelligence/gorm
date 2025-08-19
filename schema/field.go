@@ -27,13 +27,16 @@ const (
 )
 
 const (
-	Bool   DataType = "bool"
-	Int    DataType = "int"
-	Uint   DataType = "uint"
-	Float  DataType = "float"
-	String DataType = "string"
-	Time   DataType = "time"
-	Bytes  DataType = "bytes"
+	Bool       DataType = "bool"
+	Int        DataType = "int"
+	Uint       DataType = "uint"
+	Float      DataType = "float"
+	String     DataType = "string"
+	Time       DataType = "time"
+	Bytes      DataType = "bytes"
+	BLOB       DataType = "blob"
+	MEDIUMBLOB DataType = "mediumblob"
+	LONGBLOB   DataType = "longblob"
 )
 
 type Field struct {

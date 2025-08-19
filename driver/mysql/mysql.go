@@ -303,6 +303,8 @@ func (dialector Dialector) CompatibleType(dataType string) string {
 		return "json"
 	case "timestamptz":
 		return "datetime"
+	case "path":
+		return "text"
 	}
 	return dataType
 }
