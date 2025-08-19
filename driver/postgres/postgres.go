@@ -188,8 +188,9 @@ func (dialector Dialector) DataTypeOf(field *schema.Field) string {
 			return fmt.Sprintf("timestamptz(%d)", field.Precision)
 		}
 		return "timestamptz"
-	case schema.Bytes:
+	case schema.Bytes, schema.BLOB, schema.MEDIUMBLOB, schema.LONGBLOB:
 		return "bytea"
+
 	}
 
 	return string(field.DataType)
