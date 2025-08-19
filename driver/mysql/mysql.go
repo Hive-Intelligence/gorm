@@ -279,6 +279,17 @@ func (dialector Dialector) DataTypeOf(field *schema.Field) string {
 			return "datetime" + precision
 		}
 		return "datetime" + precision + " NULL"
+	case schema.Bytes:
+		switch {
+		case field.Size <= 0:
+			return "mediumblob" // handle invalid size
+		case field.Size <= 65535:
+			return "blob"
+		case field.Size <= int(math.Pow(2, 24)):
+			return "mediumblob"
+		default:
+			return "longblob"
+		}
 
 	}
 	return dialector.CompatibleType(string(field.DataType))
